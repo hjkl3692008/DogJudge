@@ -30,7 +30,7 @@ def std_img_from_root_dir(root_dir, a_ext):
     img_list = find_img_by_ext(a_ext, root_dir)
     all_ext = change_to_real_tyep(img_list)
     for ext in all_ext:
-        if ext <> 'jpeg':
+        if ext != 'jpeg':
             if ext is None:
                 ext = a_ext
             sub_img_list = find_img_by_ext(ext, root_dir)
@@ -44,25 +44,19 @@ def covert_to_jpeg(org_img, dst_img=None):
         dst_img = org_img
     im.convert('RGB').save(dst_img, 'JPEG')
 
-
-def find_img_by_ext(ext, root_dir):
-    """
-    只遍历根目录及一级子目录
-    Parameters
-    ----------
-    ext
-    root_dir
-
-    Returns
-    -------
-
-    """
-    dirs = [root_dir + name for name in os.listdir(root_dir) if os.path.isdir(os.path.join(root_dir, name))]
-    dirs.append(root_dir)
-    img_list = list()
-    for dr in dirs:
-        sub_list = glob.glob(dr + "/*." + ext)
-        img_list.extend(sub_list)
+def find_img_by_ext(ext,formoer_dir):
+    #递归遍历某目录下的全部ext后缀文件
+    #获取到当前目录下的所有子目录
+    dirs = [formoer_dir + os.sep + name for name in os.listdir(formoer_dir) if os.path.isdir(os.path.join(formoer_dir, name))]
+    #递归退出条件：当前目录下没有子目录了
+    if len(dirs) == 0:
+        #寻找该目录下的全部图片，把图片列表返回
+        img_list = glob.glob(formoer_dir + "/*." + ext)
+        return img_list
+    #否则继续递归
+    img_list = list ()
+    for dir in dirs:
+        img_list.extend(find_img_by_ext(ext,dir))
     return img_list
 
 
