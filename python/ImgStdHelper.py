@@ -15,29 +15,18 @@ ImageFile.LOAD_TRUNCATED_IMAGES = True
 
 
 def std_img_from_root_dir(root_dir, a_ext):
-    """
-    找到某一个ext的图片所有，都转换正真实类型，不是jpeg的
-    全部转换为jpeg
-    Parameters
-    ----------
-    root_dir
-    a_ext
-
-    Returns
-    -------
-
-    """
+    #将文件后缀为ext的文件替换为jpeg格式的文件
     img_list = find_img_by_ext(a_ext, root_dir)
-    all_ext = change_to_real_tyep(img_list)
+    all_ext = change_to_real_type(img_list)
     for ext in all_ext:
         if ext != 'jpeg':
             if ext is None:
                 ext = a_ext
             sub_img_list = find_img_by_ext(ext, root_dir)
             _ = map(lambda img: covert_to_jpeg(img), sub_img_list)
-            change_to_real_tyep(sub_img_list)
+            change_to_real_type(sub_img_list)
 
-
+#将图片转化为jepg格式
 def covert_to_jpeg(org_img, dst_img=None):
     im = PIL.Image.open(org_img)
     if dst_img is None:
@@ -60,11 +49,13 @@ def find_img_by_ext(ext,formoer_dir):
     return img_list
 
 
-def change_to_real_tyep(img_list):
+#将文件转换为其真实格式
+def change_to_real_type(img_list):
     all_type = []
     for img in img_list:
         if not ZCommonUtil.file_exist(img):
             continue
+        #获取其真实格式
         real_type = imghdr.what(img)
         if all_type.count(real_type) == 0:
             all_type.append(real_type)
