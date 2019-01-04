@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # /usr/bin/env sh
 echo "Begin lmdb..."
-ROOTFOLDER=/root/MachineLearn/Dog/sampleImg
+ROOTFOLDER=/root/MachineLearn/Dog/sampleImg/
 OUTPUT=/root/MachineLearn/Dog/sampleImg/dog_judge
 CONVERT_BIN=/root/caffe/build/tools/convert_imageset
 
