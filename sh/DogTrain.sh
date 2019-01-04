@@ -2,7 +2,7 @@
 echo "Begin train...."
 
 CAFEBIN=/root/caffe/build/tools/caffe
-SOLVER=../pb/solver.prototxt
+SOLVER=/root/caffe/models/bvlc_googlenet/solver.prototxt
 $CAFEBIN train -solver $SOLVER
 
 
