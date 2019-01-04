@@ -10,6 +10,7 @@ __author__ = 'BBFamily'
 
 
 def train_val_split(train_path, n_folds=10):
+	# 分割不能小于1，如n_folds=10，val占一份，train占9份
     if n_folds <= 1:
         raise ValueError('n_folds must > 1')
 
@@ -17,7 +18,9 @@ def train_val_split(train_path, n_folds=10):
         lines = f.readlines()
         class_dict = defaultdict(list)
         for line in lines:
+        	# 找出其分类
             cs = line[line.rfind(' '):]
+            # 按分类放入列表
             class_dict[cs].append(line)
 
     train = list()
@@ -27,6 +30,7 @@ def train_val_split(train_path, n_folds=10):
         val_cnt = int(cs_len / n_folds)
         val.append(class_dict[cs][:val_cnt])
         train.append(class_dict[cs][val_cnt:])
+    # 扁平化，例[[1,2],[3,4]]->[1,2,3,4]
     val = list(itertools.chain.from_iterable(val))
     train = list(itertools.chain.from_iterable(train))
     test = [t.split(' ')[0] + '\n' for t in val]
