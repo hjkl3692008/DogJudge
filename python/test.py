@@ -1,8 +1,10 @@
+# -*- coding:UTF-8 -*-
 import caffe
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 import glob
+
 # Jupyter notebook和Jupyter QtConsole里面使用这个将图片显示到前端
 # %matplotlib inline
 caffe.set_mode_cpu()
