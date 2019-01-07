@@ -76,8 +76,11 @@ for img in error_prob:
 #    plt.show()
     net.blobs['data'].data[...] = transformed_image
     output = net.forward()
+    print(output)
     output_prob = output['prob'][0]
+    print(output_prob)
     top_inds = output_prob.argsort()[::-1]
+    print(top_inds)
     for rank, ind in enumerate(top_inds, 1):
         print('rank:{} ind:{}'.format(rank,ind))
         print('probabilities rank {} label is {}'.format(rank, class_map[class_map['class'] == ind].name.values[0]))
