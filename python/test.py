@@ -3,7 +3,8 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 import glob
-%matplotlib inline
+# Jupyter notebook和Jupyter QtConsole里面使用这个将图片显示到前端
+# %matplotlib inline
 caffe.set_mode_cpu()
 
 # 这里需要对比下和/root/caffe/models/bvlc_googlenet目录下模型文件是否存在区别
