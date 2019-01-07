@@ -55,9 +55,9 @@ for index,img in enumerate(img_list):
     output = net.forward()
     output_prob = output['prob'][0]
     print('picture index:{}'.format(index))
-    print('predicted class is:{}'.format(class_map[class_map['class'] == output_prob.argmax()].name.values[0]))
-	# 这里的2代表拉布拉多
-    if output_prob.argmax() != 2:
+    print('predicted class is:{}'.format(class_map[class_map['class'] == (output_prob.argmax() + 1)].name.values[0]))
+	# 这里的1代表拉布拉多,表示在第二个位置的值是最大的
+    if output_prob.argmax() != 1:
         error_prob.append(img)
 		
 #准确率
@@ -83,5 +83,5 @@ for img in error_prob:
     print(top_inds)
     for rank, ind in enumerate(top_inds, 1):
         print('rank:{} ind:{}'.format(rank,ind))
-        print('probabilities rank {} label is {}'.format(rank, class_map[class_map['class'] == ind].name.values[0]))
+        print('probabilities rank {} label is {}'.format(rank, class_map[class_map['class'] == (ind + 1)].name.values[0]))
     print('*'*40)
