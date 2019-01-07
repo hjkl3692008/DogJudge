@@ -38,11 +38,15 @@ transformer.set_channel_swap('data', (2,1,0))
 plt.rcParams['figure.figsize'] = (10, 10)
 
 class_map = pd.read_csv('/root/MachineLearn/Dog/sampleImg/class_map.csv', index_col=0)
-print('class_map = {}'.format(class_map))
+#print('class_map = {}'.format(class_map))
+# 记录每一种分类个数,初始化为0
+#for i in range(0,14):
+#    class_map[class_map['class'] == (i + 1)].Num.values = 0
+class_map['Num'] = 0
 
 predict_dir = '/root/MachineLearn/Dog/abu' 
 img_list = glob.glob(predict_dir + '/*.jpeg')
-print('len—img_list: = {}'.format(len(img_list)))
+#print('len—img_list: = {}'.format(len(img_list)))
 
 error_prob = []
 for index,img in enumerate(img_list):
@@ -54,12 +58,14 @@ for index,img in enumerate(img_list):
     net.blobs['data'].data[...] = transformed_image
     output = net.forward()
     output_prob = output['prob'][0]
-    print('picture index:{}'.format(index))
-    print('predicted class is:{}'.format(class_map[class_map['class'] == (output_prob.argmax() + 1)].name.values[0]))
+    print('output:{}'.format(output))
+    print('picture index:{} predicted class is:{}'.format(index,class_map[class_map['class'] == (output_prob.argmax() + 1)].name.values[0]))
 	# 这里的1代表拉布拉多,表示在第二个位置的值是最大的
     if output_prob.argmax() != 1:
         error_prob.append(img)
+    class_map.loc[output_prob.argmax(),'Num'] += 1
 		
+print(class_map)
 #准确率
 accuary = (len(img_list) - len(error_prob))/float(len(img_list))
 print('accuary: = {}'.format(accuary))
@@ -76,12 +82,12 @@ for img in error_prob:
 #    plt.show()
     net.blobs['data'].data[...] = transformed_image
     output = net.forward()
-    print(output)
+    #print(output)
     output_prob = output['prob'][0]
-    print(output_prob)
+    #print(output_prob)
     top_inds = output_prob.argsort()[::-1]
-    print(top_inds)
+    #print(top_inds)
     for rank, ind in enumerate(top_inds, 1):
-        print('rank:{} ind:{}'.format(rank,ind))
+        #print('rank:{} ind:{}'.format(rank,ind))
         print('probabilities rank {} label is {}'.format(rank, class_map[class_map['class'] == (ind + 1)].name.values[0]))
     print('*'*40)
