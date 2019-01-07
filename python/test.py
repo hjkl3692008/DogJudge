@@ -20,7 +20,7 @@ mean_blob = caffe.proto.caffe_pb2.BlobProto()
 mean_blob.ParseFromString(open(model_mean_file, 'rb').read())
 mean_npy = caffe.io.blobproto_to_array(mean_blob)
 mu = mean_npy.mean(2).mean(2)[0]
-#print('mu = {}'.format(mu))
+print('mu = {}'.format(mu))
 
 # 颜色格式处理
 transformer = caffe.io.Transformer({'data': net.blobs['data'].data.shape})
